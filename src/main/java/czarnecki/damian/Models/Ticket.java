@@ -1,10 +1,11 @@
 package czarnecki.damian.Models;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 public class Ticket {
 
-    private static HashMap<Long, Ticket> tickets = new HashMap<Long, Ticket>();
+    private static LinkedHashMap<Long, Ticket> tickets = new LinkedHashMap<>();
 
     private static Long nextId = 1L;
 
@@ -110,6 +111,25 @@ public class Ticket {
     public void setTask(Task task) {
         this.task = task;
     }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hashCode(ticketKey);
+    }
+
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(o == this)
+            return true;
+        if(o == null || getClass() != o.getClass())
+            return false;
+        Ticket ticket = (Ticket)o;
+        return id != null && id.equals(ticket.id);
+    }
+
 
 
     @Override

@@ -1,4 +1,147 @@
 package czarnecki.damian.Models;
 
+import java.util.HashMap;
+import java.util.Objects;
 public class Ticket {
+
+    private static HashMap<Long, Ticket> tickets = new HashMap<Long, Ticket>();
+
+    private static Long nextId = 1L;
+
+
+    private Long id;
+    private String ticketKey;
+    private String title;
+    private String description;
+    private Level priority;
+    private Level severity;
+    private Status status;
+    private Project project;
+    private Task task;
+
+
+    public Ticket(Long id, String ticketKey, String title,
+                  String description, Level priority,
+                  Level severity, Project project, Status status) {
+        setId(id);
+        setProject(project);
+        setTicketKey(ticketKey);
+        setStatus(status);
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+        this.severity = severity;
+
+        tickets.put(getId(), this);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = nextId++;
+    }
+
+    public String getTicketKey() {
+        return ticketKey;
+    }
+
+    public void setTicketKey(String ticketKey) {
+        this.ticketKey = this.project.getShortAlias() + getId();
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Level getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Level priority) {
+        this.priority = priority;
+    }
+
+    public Level getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(Level severity) {
+        this.severity = severity;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+
+        if(project != null)
+            this.project = project;
+        else
+            throw new NullPointerException("project cannot be null");
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+
+    @Override
+    public String toString() {
+        return """
+            ============================================================
+                               TICKET DETAILS
+            ============================================================
+             ID          : %s
+             Ticket Key  : %s
+             Title       : %s
+
+            ------------------------------------------------------------
+             DESCRIPTION
+            ------------------------------------------------------------
+             %s
+
+            ------------------------------------------------------------
+             STATUS      : %s
+             PRIORITY    : %s
+             SEVERITY    : %s
+            ============================================================
+            """.formatted(
+                Objects.toString(id, "N/A"),
+                Objects.toString(ticketKey, "N/A"),
+                Objects.toString(title, "N/A"),
+                Objects.toString(description, "N/A"),
+                Objects.toString(status, "N/A"),
+                Objects.toString(priority, "N/A"),
+                Objects.toString(severity, "N/A")
+        );
+    }
+
+
 }

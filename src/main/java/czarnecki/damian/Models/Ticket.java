@@ -23,7 +23,7 @@ public class Ticket {
 
     public Ticket(Long id, String ticketKey, String title,
                   String description, Level priority,
-                  Level severity, Project project, Status status) {
+                  Level severity, Status status, Project project) {
         setId(id);
         setProject(project);
         setTicketKey(ticketKey);
@@ -112,12 +112,15 @@ public class Ticket {
         this.task = task;
     }
 
+    public static LinkedHashMap<Long, Ticket> getTickets() {
+        return tickets;
+    }
+
     @Override
     public int hashCode()
     {
         return Objects.hashCode(ticketKey);
     }
-
 
     @Override
     public boolean equals(Object o)

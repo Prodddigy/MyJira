@@ -8,6 +8,8 @@ import czarnecki.damian.Services.ProjectServices;
 import czarnecki.damian.Services.TaskServices;
 import czarnecki.damian.Services.TicketServices;
 
+import java.time.LocalDate;
+
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -50,51 +52,51 @@ public class Main {
         // Tickets
         new Ticket(1L, "TRAV-1", "Implement user authentication",
                 "Implement login, registration and logout functionality.",
-                Level.CRITICAL, Level.HIGH, Status.WORKINPROGRESS, travShell);
+                Level.CRITICAL, Level.HIGH, Status.WORKINPROGRESS,LocalDate.now(), travShell);
 
         new Ticket(2L, "TRAV-2", "Fix Google Maps autocomplete",
                 "Search suggestions sometimes fail to appear when typing quickly.",
-                Level.HIGH, Level.MEDIUM, Status.OPEN, travShell);
+                Level.HIGH, Level.MEDIUM, Status.OPEN,LocalDate.now(), travShell);
 
         new Ticket(3L, "TRAV-3", "Improve responsive layout",
                 "Adjust the application layout for mobile and tablet screens.",
-                Level.MEDIUM, Level.LOW, Status.OPEN, travShell);
+                Level.MEDIUM, Level.LOW, Status.OPEN,LocalDate.now(), travShell);
 
         new Ticket(4L, "TRAV-4", "Update application README",
                 "Document installation, configuration and deployment.",
-                Level.LOW, Level.LOW, Status.CLOSED, travShell);
+                Level.LOW, Level.LOW, Status.CLOSED,LocalDate.now(), travShell);
 
         new Ticket(5L, "TASK-1", "Implement ticket filtering",
                 "Allow users to filter tickets by status, priority and severity.",
-                Level.HIGH, Level.MEDIUM, Status.OPEN, taskFlow);
+                Level.HIGH, Level.MEDIUM, Status.OPEN,LocalDate.now().plusDays(2), taskFlow);
 
         new Ticket(6L, "TASK-2", "Add project management",
                 "Implement project creation, editing and deletion.",
-                Level.HIGH, Level.HIGH, Status.WORKINPROGRESS, taskFlow);
+                Level.HIGH, Level.HIGH, Status.WORKINPROGRESS,LocalDate.now().plusDays(2), taskFlow);
 
         new Ticket(7L, "TASK-3", "Fix ticket ID generation",
                 "Prevent duplicate ticket IDs after restarting the application.",
-                Level.CRITICAL, Level.CRITICAL, Status.OPEN, taskFlow);
+                Level.CRITICAL, Level.CRITICAL, Status.OPEN,LocalDate.now().plusDays(2), taskFlow);
 
         new Ticket(8L, "TASK-4", "Improve ticket description formatting",
                 "Improve the formatting of ticket descriptions in TXT exports.",
-                Level.LOW, Level.LOW, Status.CLOSED, taskFlow);
+                Level.LOW, Level.LOW, Status.CLOSED,LocalDate.now().plusDays(2), taskFlow);
 
         new Ticket(9L, "GAME-1", "Implement player inventory",
                 "Add an inventory system for collecting and managing items.",
-                Level.MEDIUM, Level.MEDIUM, Status.OPEN, gameHub);
+                Level.MEDIUM, Level.MEDIUM, Status.OPEN,LocalDate.now().plusDays(2), gameHub);
 
         new Ticket(10L, "GAME-2", "Fix character movement",
                 "Character occasionally gets stuck when moving near obstacles.",
-                Level.HIGH, Level.HIGH, Status.WORKINPROGRESS, gameHub);
+                Level.HIGH, Level.HIGH, Status.WORKINPROGRESS,LocalDate.now().plusDays(2), gameHub);
 
         new Ticket(11L, "GAME-3", "Optimize loading times",
                 "Reduce initial loading times and improve asset loading.",
-                Level.CRITICAL, Level.HIGH, Status.OPEN, gameHub);
+                Level.CRITICAL, Level.HIGH, Status.OPEN,LocalDate.now().plusDays(2), gameHub);
 
         new Ticket(12L, "GAME-4", "Add audio settings",
                 "Allow players to adjust music and sound effect volume.",
-                Level.LOW, Level.MEDIUM, Status.CLOSED, gameHub);
+                Level.LOW, Level.MEDIUM, Status.CLOSED,LocalDate.now().plusDays(2), gameHub);
     }
 /*
     private static void addTicket(

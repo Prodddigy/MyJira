@@ -1,5 +1,6 @@
 package czarnecki.damian.Models;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -17,13 +18,15 @@ public class Ticket {
     private Level priority;
     private Level severity;
     private Status status;
+    private LocalDate createdAt;
     private Project project;
     private Task task;
 
 
+
     public Ticket(Long id, String ticketKey, String title,
                   String description, Level priority,
-                  Level severity, Status status, Project project) {
+                  Level severity, Status status,LocalDate createdAt , Project project) {
         setId(id);
         setProject(project);
         setTicketKey(ticketKey);
@@ -32,7 +35,7 @@ public class Ticket {
         this.description = description;
         this.priority = priority;
         this.severity = severity;
-
+        setCreatedAt(createdAt);
         tickets.put(getId(), this);
     }
 
@@ -44,12 +47,23 @@ public class Ticket {
         this.id = nextId++;
     }
 
+
+
+
     public String getTicketKey() {
         return ticketKey;
     }
 
     public void setTicketKey(String ticketKey) {
         this.ticketKey = this.project.getShortAlias() + getId();
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Status getStatus() {

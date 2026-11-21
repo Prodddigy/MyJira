@@ -22,12 +22,12 @@ public class Ticket {
     private Project project;
     private Task task;
 
+public Ticket() {}
 
-
-    public Ticket(Long id, String ticketKey, String title,
+    public Ticket( String ticketKey, String title,
                   String description, Level priority,
                   Level severity, Status status,LocalDate createdAt , Project project) {
-        setId(id);
+        setId();
         setProject(project);
         setTicketKey(ticketKey);
         setStatus(status);
@@ -43,7 +43,7 @@ public class Ticket {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId() {
         this.id = nextId++;
     }
 
@@ -54,7 +54,7 @@ public class Ticket {
         return ticketKey;
     }
 
-    public void setTicketKey(String ticketKey) {
+    public void setTicketKey() {
         this.ticketKey = this.project.getShortAlias() + getId();
     }
 

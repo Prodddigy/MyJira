@@ -4,33 +4,41 @@ import czarnecki.damian.Models.Project;
 import czarnecki.damian.Services.ProjectServices;
 import czarnecki.damian.Services.TicketServices;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineInterface {
 
-    private final Scanner scanner;
+
     private final TicketServices ticketServices;
     private final ProjectServices projectServices;
+    private final TicketCreator ticketCreator;
+    private final ConsoleInput command;
 
     private Project currentProject;
     private boolean running = true;
 
-    public CommandLineInterface( TicketServices ticketServices, ProjectServices projectServices) {
-        this.scanner = new  Scanner(System.in);
+    public CommandLineInterface(TicketServices ticketServices, ProjectServices projectServices,
+                                TicketCreator ticketCreator, ConsoleInput command) {
         this.ticketServices = ticketServices;
         this.projectServices = projectServices;
+        this.ticketCreator = ticketCreator;
+        this.command = command;
     }
 
     public void start()
     {
-        System.out.println("Welcome to MyJira.");
-        System.out.println("Use `help` for available options.");
-
+        System.out.println("""
+                =================================
+                    TICKET MANAGEMENT SYSTEM
+                =================================
+                Type 'help' to see available commands.
+                """);
         while(running)
         {
             printPrompt();
 
-            String input = scanner.nextLine().trim();
+            String input = command.readString("");
 
             if(input.isEmpty())
             {
@@ -40,6 +48,7 @@ public class CommandLineInterface {
             executeCommand(input);
 
         }
+        System.out.println("byeeee o/");
     }
 
     private void executeCommand(String input)
@@ -58,7 +67,7 @@ public class CommandLineInterface {
             {
                 if(args.length<2)
                 {
-                    System.out.println("Usage: chooose-project <project-name>");
+                    System.out.println("Usage: chooose-project <project-alias>");
                     return;
                 }
 
@@ -80,29 +89,40 @@ public class CommandLineInterface {
     private void showHelp()
     {
         System.out.println("""
-
-                Available commands:
-
-                help
-                exit
-                show-projects
-                choose-project <alias>
-                current-project
-                create-ticket
-                show-tickets [limit]
-                show-top-tickets <number>
-
+                
+                ========== AVAILABLE COMMANDS ==========
+                
+                GENERAL:
+                  help
+                  exit
+                
+                PROJECTS:
+                  show-projects
+                  choose-project <alias>
+                  current-project
+                
+                TICKETS:
+                  create-ticket
+                  show-tickets [limit]
+                  show-top-tickets <number>
+                
+                ========================================
                 """);
     }
 
     private void printPrompt()
     {
         String projectAlias= currentProject == null
-                ? "NO PROJECT"
-                :currentProject.getShortAlias();
-        System.out.println("["+ConsoleColors.CYAN + projectAlias + ConsoleColors.RESET + "] > ");
+                ? "["+ConsoleColors.RED + "NO PROJECT" + ConsoleColors.RESET + "] > "
+                :"["+ConsoleColors.CYAN + currentProject.getShortAlias()+ ConsoleColors.RESET + "] > ";
+        System.out.println(projectAlias);
 
 
+    }
+
+    private void showCurrentProjects()
+    {
+        List<Project> projects = projectServices.
     }
 
 

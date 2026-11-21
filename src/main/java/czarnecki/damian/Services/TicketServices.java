@@ -1,8 +1,10 @@
 package czarnecki.damian.Services;
 
+import czarnecki.damian.Models.DTO.TicketDTO;
 import czarnecki.damian.Models.Level;
 import czarnecki.damian.Models.Status;
 import czarnecki.damian.Models.Ticket;
+import czarnecki.damian.Repositories.ITicketRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -11,7 +13,62 @@ import java.util.Optional;
 
 public class TicketServices {
 
-    private final Ticket
+    private final ITicketRepository ticketRepository;
+
+    public TicketServices(ITicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
+    }
+
+
+    public Ticket createTicket(TicketDTO ticketDTO)
+    {
+        validateRequest(ticketDTO);
+
+        Ticket ticket = new Ticket();
+        ticket.setId();
+        ticket.setTitle(ticketDTO.title());
+        ticket.setDescription(ticketDTO.description());
+        ticket.setProject(ticketDTO.project());
+        ticket.setCreatedAt(ticketDTO.date());
+        ticket.setSeverity(ticketDTO.severity());
+        ticket.setPriority(ticketDTO.priority());
+        ticket.setTicketKey();
+        ticket.setTask(ticketDTO.task());
+
+
+
+        return ticketRepository.Save(ticket);
+    }
+
+    private void validateRequest(TicketDTO ticket) {
+
+        if (ticket == null) {
+            throw new IllegalArgumentException(
+                    "Ticket request cannot be null."
+            );
+        }
+
+        if (ticket.title() == null || ticket.title().isBlank()) {
+            throw new IllegalArgumentException(
+                    "Ticket title cannot be empty."
+            );
+        }
+
+        if (ticket.project() == null) {
+            throw new IllegalArgumentException(
+                    "Ticket must belong to a project."
+            );
+        }
+
+        if (ticket.priority() == null ||
+                ticket.severity() == null ||
+                ticket.status() == null) {
+
+            throw new IllegalArgumentException(
+                    "Priority, severity and status are required."
+            );
+        }
+    }
 
 
     public void findTicketsWithHighestPriority()

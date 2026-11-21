@@ -1,31 +1,51 @@
 package czarnecki.damian;
 
+import czarnecki.damian.CLI.CommandLineInterface;
+import czarnecki.damian.CLI.ConsoleInput;
+import czarnecki.damian.CLI.TicketCreator;
 import czarnecki.damian.Models.Level;
 import czarnecki.damian.Models.Project;
 import czarnecki.damian.Models.Status;
 import czarnecki.damian.Models.Ticket;
+import czarnecki.damian.Repositories.ITicketRepository;
+import czarnecki.damian.Repositories.InMemoryTicketRepository;
+import czarnecki.damian.Repositories.ProjectRepository;
 import czarnecki.damian.Services.ProjectServices;
 import czarnecki.damian.Services.TaskServices;
 import czarnecki.damian.Services.TicketServices;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-    initializeTickets();
-      ProjectServices projectServices = new ProjectServices();
-      TicketServices ticketServices = new TicketServices();
+        initializeTickets();
+
+        Scanner scanner = new Scanner(System.in);
+        ConsoleInput input = new ConsoleInput(scanner);
+        InMemoryTicketRepository ticketRepository = new  InMemoryTicketRepository();
+        ProjectRepository projectRepository = new  ProjectRepository();
+
+        TicketServices ticketServices = new TicketServices(ticketRepository);
+
+
+        ProjectServices projectServices = new ProjectServices(/*projecyRepository*/);
+
+        TicketCreator ticketCreator = new TicketCreator(ticketServices,input);
+
+        CommandLineInterface cli = new CommandLineInterface(ticketServices, projectServices,ticketCreator,input);
+        // TicketServices ticketServices = new TicketServices(new );
 
 
 
 
-      projectServices.CountTicketsPerProject();
+         projectServices.CountTicketsPerProject();
 
-      ticketServices.findAllTicketsWithHighestPriority("GAME");
-      ticketServices.printNotClosedTickets("GAME");
+//      ticketServices.findAllTicketsWithHighestPriority("GAME");
+//      ticketServices.printNotClosedTickets("GAME");
 
     //here start cmd interaction
     }
@@ -50,51 +70,51 @@ public class Main {
         gameHub.setDescription("Gaming community platform.");
 
         // Tickets
-        new Ticket(1L, "TRAV-1", "Implement user authentication",
+        new Ticket( "TRAV-1", "Implement user authentication",
                 "Implement login, registration and logout functionality.",
                 Level.CRITICAL, Level.HIGH, Status.WORKINPROGRESS,LocalDate.now(), travShell);
 
-        new Ticket(2L, "TRAV-2", "Fix Google Maps autocomplete",
+        new Ticket( "TRAV-2", "Fix Google Maps autocomplete",
                 "Search suggestions sometimes fail to appear when typing quickly.",
                 Level.HIGH, Level.MEDIUM, Status.OPEN,LocalDate.now(), travShell);
 
-        new Ticket(3L, "TRAV-3", "Improve responsive layout",
+        new Ticket( "TRAV-3", "Improve responsive layout",
                 "Adjust the application layout for mobile and tablet screens.",
                 Level.MEDIUM, Level.LOW, Status.OPEN,LocalDate.now(), travShell);
 
-        new Ticket(4L, "TRAV-4", "Update application README",
+        new Ticket( "TRAV-4", "Update application README",
                 "Document installation, configuration and deployment.",
                 Level.LOW, Level.LOW, Status.CLOSED,LocalDate.now(), travShell);
 
-        new Ticket(5L, "TASK-1", "Implement ticket filtering",
+        new Ticket( "TASK-1", "Implement ticket filtering",
                 "Allow users to filter tickets by status, priority and severity.",
                 Level.HIGH, Level.MEDIUM, Status.OPEN,LocalDate.now().plusDays(2), taskFlow);
 
-        new Ticket(6L, "TASK-2", "Add project management",
+        new Ticket( "TASK-2", "Add project management",
                 "Implement project creation, editing and deletion.",
                 Level.HIGH, Level.HIGH, Status.WORKINPROGRESS,LocalDate.now().plusDays(2), taskFlow);
 
-        new Ticket(7L, "TASK-3", "Fix ticket ID generation",
+        new Ticket( "TASK-3", "Fix ticket ID generation",
                 "Prevent duplicate ticket IDs after restarting the application.",
                 Level.CRITICAL, Level.CRITICAL, Status.OPEN,LocalDate.now().plusDays(2), taskFlow);
 
-        new Ticket(8L, "TASK-4", "Improve ticket description formatting",
+        new Ticket( "TASK-4", "Improve ticket description formatting",
                 "Improve the formatting of ticket descriptions in TXT exports.",
                 Level.LOW, Level.LOW, Status.CLOSED,LocalDate.now().plusDays(2), taskFlow);
 
-        new Ticket(9L, "GAME-1", "Implement player inventory",
+        new Ticket( "GAME-1", "Implement player inventory",
                 "Add an inventory system for collecting and managing items.",
                 Level.MEDIUM, Level.MEDIUM, Status.OPEN,LocalDate.now().plusDays(2), gameHub);
 
-        new Ticket(10L, "GAME-2", "Fix character movement",
+        new Ticket( "GAME-2", "Fix character movement",
                 "Character occasionally gets stuck when moving near obstacles.",
                 Level.HIGH, Level.HIGH, Status.WORKINPROGRESS,LocalDate.now().plusDays(2), gameHub);
 
-        new Ticket(11L, "GAME-3", "Optimize loading times",
+        new Ticket( "GAME-3", "Optimize loading times",
                 "Reduce initial loading times and improve asset loading.",
                 Level.CRITICAL, Level.HIGH, Status.OPEN,LocalDate.now().plusDays(2), gameHub);
 
-        new Ticket(12L, "GAME-4", "Add audio settings",
+        new Ticket( "GAME-4", "Add audio settings",
                 "Allow players to adjust music and sound effect volume.",
                 Level.LOW, Level.MEDIUM, Status.CLOSED,LocalDate.now().plusDays(2), gameHub);
     }

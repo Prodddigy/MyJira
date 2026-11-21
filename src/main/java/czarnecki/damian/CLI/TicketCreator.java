@@ -47,12 +47,12 @@ public class TicketCreator {
                 createdAt,
                 currentProject,
                 task);
-        try{
+//        try{
             Ticket ticket = ticketServices.createTicket(ticketDTO);
 
             System.out.println("Ticket created successfully:" + ticket.getTicketKey());
-        } catch (Exception e) {
-            System.out.println("Error creating ticket:" + e.getMessage());
-        }
+//        } catch (Exception e) {
+//            System.out.println("Error creating ticket:" + e.getMessage());
+//        }
     }
 }

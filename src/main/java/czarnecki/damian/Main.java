@@ -15,6 +15,7 @@ import czarnecki.damian.Services.TaskServices;
 import czarnecki.damian.Services.TicketServices;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 
@@ -26,23 +27,36 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         ConsoleInput input = new ConsoleInput(scanner);
+
         InMemoryTicketRepository ticketRepository = new  InMemoryTicketRepository();
         ProjectRepository projectRepository = new  ProjectRepository();
+        ProjectRepository.projects = new LinkedHashMap<>(Project.getProjects());
+        System.out.println(Project.getProjects().size()+"size");
+        for (var project: ProjectRepository.projects.values())
+        {
+            System.out.println(project);
+        }
+        for (var project: ProjectRepository.projects.keySet())
+        {
+            System.out.println(project);
+        }
+
 
         TicketServices ticketServices = new TicketServices(ticketRepository);
 
 
-        ProjectServices projectServices = new ProjectServices(/*projecyRepository*/);
+        ProjectServices projectServices = new ProjectServices(projectRepository);
 
         TicketCreator ticketCreator = new TicketCreator(ticketServices,input);
 
-        CommandLineInterface cli = new CommandLineInterface(ticketServices, projectServices,ticketCreator,input);
+        CommandLineInterface cli = new CommandLineInterface(ticketServices,
+                projectServices,ticketCreator,input);
         // TicketServices ticketServices = new TicketServices(new );
+        projectServices.CountTicketsPerProject();
+        cli.start();
 
 
 
-
-         projectServices.CountTicketsPerProject();
 
 //      ticketServices.findAllTicketsWithHighestPriority("GAME");
 //      ticketServices.printNotClosedTickets("GAME");
@@ -54,20 +68,20 @@ public class Main {
     public static void initializeTickets() {
 
         // Projects
-        Project travShell = new Project();
-        travShell.setName("TravShell");
-        travShell.setShortAlias("TRAV");
-        travShell.setDescription("Travel planning application.");
+        Project travShell = new Project("TravShell","TRAV","Travel planning application.");
+//        travShell.setName("TravShell");
+//        travShell.setShortAlias("TRAV");
+//        travShell.setDescription("Travel planning application.");
 
-        Project taskFlow = new Project();
-        taskFlow.setName("TaskFlow");
-        taskFlow.setShortAlias("TASK");
-        taskFlow.setDescription("Task and project management platform.");
+        Project taskFlow = new Project("TaskFlow","TASK","Task and project management platform.");
+//        taskFlow.setName("TaskFlow");
+//        taskFlow.setShortAlias("TASK");
+//        taskFlow.setDescription("Task and project management platform.");
 
-        Project gameHub = new Project();
-        gameHub.setName("GameHub");
-        gameHub.setShortAlias("GAME");
-        gameHub.setDescription("Gaming community platform.");
+        Project gameHub = new Project("GameHub","GAME","Game hub application.");
+//        gameHub.setName("GameHub");
+//        gameHub.setShortAlias("GAME");
+//        gameHub.setDescription("Gaming community platform.");
 
         // Tickets
         new Ticket( "TRAV-1", "Implement user authentication",

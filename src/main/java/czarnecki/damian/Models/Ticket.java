@@ -29,7 +29,7 @@ public Ticket() {}
                   Level severity, Status status,LocalDate createdAt , Project project) {
         setId();
         setProject(project);
-        setTicketKey(ticketKey);
+        setTicketKey();
         setStatus(status);
         this.title = title;
         this.description = description;

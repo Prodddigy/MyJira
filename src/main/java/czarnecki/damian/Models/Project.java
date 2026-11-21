@@ -1,6 +1,8 @@
 package czarnecki.damian.Models;
 
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class Project {
 
@@ -8,26 +10,26 @@ public class Project {
     private String shortAlias;
     private String description;
 
-    private static ArrayList<Project> projects =new ArrayList<>();
+    private static LinkedHashMap<String,Project> projects =new LinkedHashMap<String,Project>();
 
     public Project() {
-        projects.add(this);
+        projects.put(this.getShortAlias(),this);
     }
 
     public Project(String name, String shortAlias, String description) {
         this.name = name;
         this.shortAlias = shortAlias;
         this.description = description;
-        projects.add(this);
+        projects.put(this.getShortAlias(),this);
     }
 
-    public static ArrayList<Project> getProjects() {
+    public static LinkedHashMap<String,Project> getProjects() {
         return projects;
     }
 
-    public static void setProjects(ArrayList<Project> projects) {
-        Project.projects = projects;
-    }
+//    public static void setProjects(ArrayList<Project> projects) {
+//        Project.projects = projects;
+//    }
 
     public String getName() {
         return name;

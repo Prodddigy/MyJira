@@ -2,10 +2,12 @@ package czarnecki.damian.Services;
 
 import czarnecki.damian.Models.DTO.TicketDTO;
 import czarnecki.damian.Models.Level;
+import czarnecki.damian.Models.Project;
 import czarnecki.damian.Models.Status;
 import czarnecki.damian.Models.Ticket;
 import czarnecki.damian.Repositories.ITicketRepository;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +26,8 @@ public class TicketServices {
     {
         validateRequest(ticketDTO);
 
-        Ticket ticket = new Ticket();
+        Ticket ticket = new Ticket("ticketKey",ticketDTO.title(),ticketDTO.description(),ticketDTO.priority()
+        ,ticketDTO.severity(),Status.OPEN, LocalDate.now(),ticketDTO.project());
         ticket.setId();
         ticket.setTitle(ticketDTO.title());
         ticket.setDescription(ticketDTO.description());
@@ -71,7 +74,10 @@ public class TicketServices {
         }
     }
 
-
+    public List<Ticket> ListAllOpenedTicketsOfProject(Project project)
+    {
+        return ticketRepository.ListAllOpenedTicketsOfProject(project);
+    }
     public void findTicketsWithHighestPriority()
     {
         List<Ticket> highPriorityTickets = Ticket.getTickets().values()

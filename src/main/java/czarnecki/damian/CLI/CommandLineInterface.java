@@ -86,7 +86,15 @@ public class CommandLineInterface {
                 ticketCreator.createTicket(currentProject);
             }
 
-            case "show-tickets" -> System.out.println(Ticket.getTickets().values().stream().findFirst())/* showTickets(args)*/;
+            case "show-tickets" ->
+            {
+                if(currentProject == null)
+                {
+                    System.out.println("You need to choose a project first.");
+                    return;
+                }
+                showTicketsOfProject(ticketServices.ListAllOpenedTicketsOfProject(currentProject));
+            }/* showTickets(args)*/
 
            // case "show-top-tickets" -> /*showTopTickets(args)*/;
 
@@ -164,6 +172,54 @@ public class CommandLineInterface {
         currentProject = project;
         System.out.println("Chosen project: " + project.getShortAlias());
     }
+    private static final int TITLE_WIDTH = 25;
+    private void showTicketsOfProject(List<Ticket> tickets)
+    {
 
+
+
+
+        if (tickets == null || tickets.isEmpty()) {
+            System.out.println("No tickets found.");
+            return;
+        }
+
+        System.out.println("\nKEY       PRIORITY   STATUS       TITLE");
+        System.out.println("-----------------------------------------------");
+
+        for (Ticket ticket : tickets) {
+
+            String title = truncate(
+                    ticket.getTitle(),
+                    TITLE_WIDTH
+            );
+
+            System.out.printf(
+                    "%-9s %-10s %-12s %s%n",
+                    ticket.getTicketKey(),
+                    ticket.getPriority(),
+                    ticket.getStatus(),
+                    title
+            );
+        }
+
+        System.out.println("-----------------------------------------------");
+        System.out.printf("Total: %d tickets%n", tickets.size());
+    }
+
+
+
+    private String truncate(String value, int maxLength) {
+
+        if (value == null) {
+            return "";
+        }
+
+        if (value.length() <= maxLength) {
+            return value;
+        }
+
+        return value.substring(0, maxLength - 3) + "...";
+    }
 
 }
